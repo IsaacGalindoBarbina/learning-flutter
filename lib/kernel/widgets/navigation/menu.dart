@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:learning_app_a/config/navigation/home_stack.dart';
+import 'package:learning_app_a/config/navigation/login_stack.dart';
 import 'package:learning_app_a/config/navigation/news_stack.dart';
 import 'package:learning_app_a/kernel/widgets/navigation/bottom_navigation_tab.dart';
-import 'package:learning_app_a/modules/auth/adapterts/screens/profile.dart';
 // import 'package:learning_app_a/modules/home/adapters/screens/home.dart';
 import 'package:learning_app_a/modules/settings/adapters/screens/settings.dart';
 
@@ -27,7 +27,7 @@ class _MenuState extends State<Menu> {
     return  Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: const [HomeStack(), Profile(), Settings(), NewsStack() ],
+        children: const [HomeStack(), LoginStack(), Settings(), NewsStack() ],
       ),
       bottomNavigationBar: BottomNavigationTab(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),);
   }
