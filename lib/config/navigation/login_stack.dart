@@ -9,10 +9,10 @@ class LoginStack extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/auth',
+      initialRoute: '/login',
       routes: {
-        '/auth': (context) => const Login(),
-        '/auth/account' : (context) => const Account()
+        '/login': (context) => const Login(),
+        '/login/account' : (context) => const Account()
       },
     );
   }

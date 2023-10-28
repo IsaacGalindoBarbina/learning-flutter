@@ -1,22 +1,26 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:learning_app_a/kernel/theme/colors_app.dart';
 import 'package:learning_app_a/kernel/validations/validation_app.dart';
 
 class Login extends StatefulWidget {
- const Login({super.key});
+  const Login({super.key});
 
- @override
- State<Login> createState() => _LoginFormState();
+  @override
+  State<Login> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<Login> {
- final _formKey = GlobalKey<FormState>();
- var _isButtonDisabled = true;
- final TextEditingController _email = TextEditingController(text: '');
- final TextEditingController _password = TextEditingController(text: '');
+  final _formKey = GlobalKey<FormState>();
+  var _isButtonDisabled = true;
+  final TextEditingController _email = TextEditingController(text: '');
+  final TextEditingController _password = TextEditingController(text: '');
+  final dio = Dio();
 
- @override
- Widget build(BuildContext context) {
+ 
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -39,24 +43,29 @@ class _LoginFormState extends State<Login> {
               child: Form(
                 key: _formKey,
                 onChanged: () {
-                 setState(() {
+                  setState(() {
                     _isButtonDisabled = !_formKey.currentState!.validate();
-                 });
+                  });
                 },
                 child: Column(
-                 children: <Widget>[
+                  children: <Widget>[
+                    //podria quitar el widget, verificar
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(16.0),
-                          textStyle: const TextStyle(fontSize: 18)),
-                        onPressed: (){
-                          Navigator.of(context).pushNamed('/auth/account');
-                        },
-                        child: const Text('Crear una cuenta'),
-                      ),
-                    ),
+                        padding: const EdgeInsets.all(16.0),
+                        // child: TextButton(
+                        //   style: TextButton.styleFrom(
+                        //     padding: const EdgeInsets.all(16.0),
+                        //     textStyle: const TextStyle(fontSize: 18)),
+                        //   onPressed: (){
+                        //     Navigator.of(context).pushNamed('/login/account');
+                        //   },
+                        //   child: const Text('Crear una cuenta'),
+                        // ),
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/login/account');
+                            },
+                            child: const Text('Crear una cuenta'),)),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
@@ -79,8 +88,8 @@ class _LoginFormState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'Contraseña:'),
+                        decoration:
+                            const InputDecoration(labelText: 'Contraseña:'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Campo obligario';
@@ -101,11 +110,12 @@ class _LoginFormState extends State<Login> {
                           onPressed: _isButtonDisabled
                               ? null
                               : () {
-                                 print('$_email $_password');
+                                  print('$_email $_password');
+                                  request();
                                 },
                           child: const Text('Iniciar Sesion')),
                     ),
-                 ],
+                  ],
                 ),
               ),
             ),
@@ -113,5 +123,14 @@ class _LoginFormState extends State<Login> {
         ),
       ),
     );
- }
+  }
+
+ void request() async{
+    Response response;
+    response = await dio.post('http://192.168.137.1:3000/api/auth/login', data: { "usuario":_email.value.text,"contrasena" : _password.value.text }
+    );
+    print("aDECIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+    print(response.data.toString());
+  }
+
 }

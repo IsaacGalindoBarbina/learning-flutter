@@ -1,31 +1,33 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:learning_app_a/kernel/theme/colors_app.dart';
 import 'package:learning_app_a/kernel/validations/validation_app.dart';
 
-class AccountForm extends StatefulWidget {
-  const AccountForm({super.key});
+class FirstAccount extends StatefulWidget {
+  const FirstAccount({super.key});
   @override
-  State<AccountForm> createState() => _AccountFormState();
+  State<FirstAccount> createState() => _FirstAccountState();
 }
 
-class _AccountFormState extends State<AccountForm> {
+class _FirstAccountState extends State<FirstAccount> {
   final _formKey = GlobalKey<FormState>();
   var _isButtonDisabled = true;
   final TextEditingController _email = TextEditingController(text: '');
   final TextEditingController _password= TextEditingController(text: '');
+   final dio = Dio();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('creacion de cuenta')),
+      appBar: AppBar(title: const Text('Regresar a Inicio'),backgroundColor: ColorsApp.basedColor,),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
                 margin: const EdgeInsets.only(top: 16),
                 child: Image.asset(
-                  'assets/images/logo-crochet.png',
-                  width: 300,
-                  height: 100,
+                  'assets/images/logo_crochet.png',
+                  width: 450,
+                height: 250,
                 )
             ),
             Card(
@@ -84,7 +86,7 @@ class _AccountFormState extends State<AccountForm> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               minimumSize: const Size(300, 50),
-                              backgroundColor: ColorsApp.successColor),
+                              backgroundColor: ColorsApp.bottomColor),
                           onPressed: _isButtonDisabled
                               ? null
                               : () {
@@ -101,4 +103,6 @@ class _AccountFormState extends State<AccountForm> {
       ),
     );
   }
+
+  
 }
